@@ -46,4 +46,43 @@ describe('toCelcuis', () => {
   it('should be a function', () => {
     expect(typeof toCelcius).toBe('function');
   });
+
+  it('should return a number when a number is passed as a first arguement', () => {
+    expect(typeof toCelcius(1)).toBe('number');
+    expect(typeof toCelcius(1.8)).toBe('number');
+    expect(typeof toCelcius(2)).toBe('number');
+  });
+
+  it(`should return null if the first argument can't be converted into a number`, () => {
+    expect(toCelcius(null)).toBe(null);
+    expect(toCelcius({})).toBe(null);
+    expect(toCelcius([])).toBe(null);
+    expect(toCelcius('toto')).toBe(null);
+    expect(toCelcius()).toBe(null);
+  });
+
+  it('should return the first argument (interpreted as farenheit by default) converted into celcius', () => {
+    expect(toCelcius(32)).toBe(0);
+    expect(toCelcius(50)).toBe(10);
+    expect(toCelcius(500)).toBe(260);
+  });
+
+  it('should accept a string representing a number in first parameter', () => {
+    expect(toCelcius('32')).toBe(0);
+    expect(toCelcius('50')).toBe(10);
+    expect(toCelcius('500')).toBe(260);
+  });
+
+  it('should have a precision of 2 by default', () => {
+    expect(toCelcius(52)).toBe(11.11);
+  });
+
+  it('should accept a second parameter to indicate the required precision', () => {
+    expect(toCelcius(52, 1)).toBe(11.1);
+    expect(toCelcius(80, 4)).toBe(26.6667);
+  });
+
+  it('should accept a third argument to specify a that the value we give is in kelvin and not farenheit', () => {
+    expect(toCelcius(300, 2, 'k')).toBe(26.85);
+  });
 });
